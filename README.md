@@ -1,5 +1,5 @@
-Bigger Firms, Better Productivity?
-Overview
+# Bigger Firms, Better Productivity?
+## Overview
 This project examines the relationship between firm size and labor productivity among firms in Uzbekistan using data from the World Bank Enterprise Survey.
 The original research question asks whether larger firms tend to exhibit higher productivity. Rather than assuming that relationship in advance, the analysis tests the relationship empirically using descriptive statistics and regression analysis.
 Research Question
