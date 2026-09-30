@@ -8,7 +8,7 @@ The initial regressions suggested that large firms have much lower measured sale
 
 ## Research Question
 
-**Do larger firms exhibit higher labor productivity than smaller firms in Uzbekistan?**
+**What is the relationship between firm size and labor productivity among firms in Uzbekistan?**
 
 ## Data
 
@@ -52,7 +52,7 @@ In total 135 firms are flagged, about 13-16% of each size group. Firms with miss
 - Small firms are the reference category.
 - Two outcome specifications:
   1. Log sales per employee, on firm-size categories.
-  2. Log sales on log employment (elasticity). This avoids placing employment in the denominator of the outcome, where measurement error in employment would bias the size coefficient downward. An elasticity of 1 means productivity per worker does not change with size.
+  2. Log sales on log employment (elasticity). This avoids placing employment in the denominator of the outcome, where measurement error in employment would bias the size coefficient downward. An elasticity of 1 means sales scale proportionally with employment, so sales per worker is constant with employment.
 
 ## Results
 
@@ -69,7 +69,7 @@ In total 135 firms are flagged, about 13-16% of each size group. Firms with miss
 
 Medium firms are not statistically different from small firms in any specification.
 
-The large-firm penalty shrinks steadily as extreme values are removed. Trimming the tails of the outcome variable also removes valid observations, so the labor-cost consistency rule is the preferred cleaning method. On that sample, the large-firm coefficient is -0.46, corresponding to about 37% lower sales per worker than the Small reference group (exp(-0.46) - 1). This is a discrete comparison between broad employee-count categories, not an estimate of the slope of productivity over the full employment distribution.
+The large-firm coefficient changes substantially across treatments of extreme observations. Trimming the tails of the outcome variable also removes observations based on the outcome itself, whereas the labor-cost consistency rule uses an external consistency check. On that sample, the large-firm coefficient is -0.46, corresponding to about 37% lower sales per worker than the Small reference group (exp(-0.46) - 1). This is a discrete comparison between broad employee-count categories, not an estimate of the slope of productivity over the full employment distribution.
 
 ### Elasticity of sales with respect to employment
 
@@ -83,18 +83,18 @@ In the cleaned sample the elasticity is not statistically distinguishable from 1
 
 ## Interpretation
 
-The results do not provide evidence that larger firms are more productive. The two main specifications describe the size relationship in different ways:
+The two main specifications describe the size relationship in different ways:
 
-- In the raw data, large firms appear about 55% less productive, but this is mostly a data-quality artifact.
-- After cleaning, the large-firm gap is smaller (about 30-37% at the median and in OLS) and only moderately significant.
-- The elasticity estimates are close to 1 and not statistically different from it, but their confidence intervals do not rule out a modest negative relationship.
+- The raw data show a large negative large-vs-small coefficient, but this estimate is sensitive to extreme observations.
+- After the labor-cost consistency screen, the large-firm coefficient is -0.46 in the OLS specification, corresponding to about 37% lower sales per worker than the Small reference group.
+- The elasticity estimates are close to 1 and not statistically different from 1 in the cleaned sample, but their confidence intervals do not rule out a modest negative relationship.
 
-These are associations in observational, cross-sectional data and do not show that growing a firm changes its productivity.
+These are associations in observational, cross-sectional data and do not establish that changes in firm size cause changes in productivity.
 
 ## Limitations
 
 - Cross-sectional data; results are associations, not causal effects.
-- Productivity is sales per employee, not value added. It depends on input intensity, so it is not directly comparable across sectors (sector fixed effects only partly address this).
+- Productivity is sales per employee, not value added. It depends on input intensity, so it is not directly comparable across sectors (sector controls partly account for cross-sector differences).
 - Employment counts may be measured with error, which can affect the sales-per-employee comparison. The elasticity specification avoids putting employment in the denominator of the dependent variable, but it does not eliminate measurement-error concerns.
 - The employee-based size categories are a substantive definition used for the analysis, while `wmedian` is the survey weight. The notebook cross-tabulates these categories against the survey's `a6a` size variable to document any mismatch rather than treating the two definitions as interchangeable.
 - The consistency rule for removing firms depends on its thresholds and on the labor-cost variable being reliable. It is not fully independent of the outcome, since labor cost above sales implies low measured productivity. Alternative thresholds are therefore reported as a robustness check rather than treating the main cutoffs as uniquely correct.
