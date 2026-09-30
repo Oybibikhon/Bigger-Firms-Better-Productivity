@@ -67,7 +67,7 @@ In total 135 firms are flagged, about 13-16% of each size group. Firms with miss
 
 Medium firms are not statistically different from small firms in any specification.
 
-The large-firm penalty shrinks steadily as extreme values are removed. Trimming the tails of the outcome variable also removes valid observations, so the labor-cost consistency rule is the preferred cleaning method. On that sample, large firms have about 37% lower sales per worker than small firms (exp(-0.46) - 1), with moderate statistical evidence.
+The large-firm penalty shrinks steadily as extreme values are removed. Trimming the tails of the outcome variable also removes valid observations, so the labor-cost consistency rule is the preferred cleaning method. On that sample, the large-firm coefficient is -0.46, corresponding to about 37% lower sales per worker than the Small reference group (exp(-0.46) - 1). This is a discrete comparison between broad employee-count categories, not an estimate of the slope of productivity over the full employment distribution.
 
 ### Elasticity of sales with respect to employment
 
@@ -81,7 +81,7 @@ In the cleaned sample the elasticity is not statistically distinguishable from 1
 
 ## Interpretation
 
-The results do not provide evidence that larger firms are more productive. The size-dummy and elasticity specifications give somewhat different descriptions of the size relationship:
+The results do not provide evidence that larger firms are more productive. The two main specifications describe the size relationship in different ways:
 
 - In the raw data, large firms appear about 55% less productive, but this is mostly a data-quality artifact.
 - After cleaning, the large-firm gap is smaller (about 30-37% at the median and in OLS) and only moderately significant.
