@@ -21,7 +21,7 @@ Key variables:
 - Firm age (survey year minus year of establishment, `b5`)
 - Foreign ownership (`b2b`) and exporter status (`d3b` + `d3c`)
 - Sector and region strata
-- Survey weights (`wmedian`; `wstrict` and `wweak` give similar results)
+- Survey weights (`wmedian`; `wstrict` and `wweak` give similar results). The regressions define firm size from reported permanent employees; the survey's separate `a6a` size variable is checked against these categories rather than assumed to be identical.
 
 Productivity is measured as annual sales per employee (in logs). This is a revenue-based measure, not value added.
 
@@ -96,6 +96,7 @@ These are associations in observational, cross-sectional data and do not show th
 - Cross-sectional data; results are associations, not causal effects.
 - Productivity is sales per employee, not value added. It depends on input intensity, so it is not directly comparable across sectors (sector fixed effects only partly address this).
 - Employment counts may be measured with error, which biases the sales-per-employee comparison against larger firms. The elasticity specification reduces this problem but does not remove it; the true elasticity may be somewhat higher than 0.90.
+- The employee-based size categories are a substantive definition used for the analysis, while `wmedian` is the survey weight. The notebook cross-tabulates these categories against the survey's `a6a` size variable to document any mismatch rather than treating the two definitions as interchangeable.
 - The consistency rule for removing firms depends on its thresholds and on the labor-cost variable being reliable. It is not fully independent of the outcome, since labor cost above sales implies low measured productivity. Alternative thresholds are therefore reported as a robustness check rather than treating the main cutoffs as uniquely correct.
 - About 13-16% of each size group is dropped in the cleaned sample, so the conclusions apply to firms with internally consistent reports.
 - Small subgroups (foreign-owned firms: 47; exporters: 98) limit what the control variables can show.
