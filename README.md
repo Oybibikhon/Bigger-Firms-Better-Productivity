@@ -4,7 +4,7 @@
 
 This project examines the relationship between firm size and labor productivity among firms in Uzbekistan, using the 2024 World Bank Enterprise Survey (WBES).
 
-The initial regressions suggested that large firms are far *less* productive than small firms. Closer inspection showed that this result was driven largely by firms whose reported sales contradict their own reported labor costs. After removing these inconsistent observations, the estimated sales-employment elasticity is close to 1, although the confidence interval still allows for a modest negative relationship between firm size and sales per worker.
+The initial regressions suggested that large firms have much lower measured sales per worker than small firms. The estimate is sensitive to how extreme observations are handled. Some suspicious observations have sales figures that are inconsistent with reported labor costs, but the cleaning rule can itself remove low-productivity observations, so the raw gap should not be attributed entirely to data quality.
 
 ## Research Question
 
@@ -122,4 +122,4 @@ Bigger-Firms-Better-Productivity/
 
 ## Key Takeaway
 
-The raw data appear to show that large firms are much less productive, but that result is largely driven by inconsistent sales reports. Once firms with contradictory sales and labor-cost figures are removed, the estimated sales-employment elasticity is close to 1. This is consistent with proportional scaling, but the confidence interval does not rule out a modest negative relationship between firm size and sales per worker. The size-dummy specification separately estimates a sizable negative gap for large firms, so the two specifications should be reported rather than collapsed into a single conclusion.
+The raw data show a large negative size coefficient, but that estimate is sensitive to extreme observations. Some observations have sales figures that are inconsistent with reported labor costs, while the consistency screen itself can remove low-productivity observations. Once the screen is applied, the estimated sales-employment elasticity is close to 1. This is consistent with proportional scaling, but the confidence interval does not rule out a modest negative relationship between firm size and sales per worker. The size-dummy specification separately estimates a sizable negative gap for large firms, so the two specifications should be reported rather than collapsed into a single conclusion.
