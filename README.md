@@ -4,7 +4,7 @@
 
 This project examines the relationship between firm size and labor productivity among firms in Uzbekistan, using the 2024 World Bank Enterprise Survey (WBES).
 
-The initial regressions suggested that large firms are far *less* productive than small firms. Closer inspection showed that this result was driven largely by firms whose reported sales contradict their own reported labor costs. After removing these inconsistent observations, sales grow roughly in proportion to employment, and any remaining large-firm disadvantage is weak.
+The initial regressions suggested that large firms are far *less* productive than small firms. Closer inspection showed that this result was driven largely by firms whose reported sales contradict their own reported labor costs. After removing these inconsistent observations, the estimated sales-employment elasticity is close to 1, although the confidence interval still allows for a modest negative relationship between firm size and sales per worker.
 
 ## Research Question
 
@@ -77,15 +77,15 @@ The large-firm penalty shrinks steadily as extreme values are removed. Trimming 
 | Inconsistent firms removed | 752 | 0.896 | 0.068 | 0.128 |
 | Inconsistent firms removed, survey-weighted | 752 | 0.851 | 0.129 | 0.250 |
 
-In the cleaned sample the elasticity is not distinguishable from 1: sales grow roughly in proportion to headcount, so productivity per worker is about the same across firm sizes.
+In the cleaned sample the elasticity is not statistically distinguishable from 1. The point estimate is 0.896 (SE 0.068), with an approximate 95% confidence interval of 0.76–1.03. The survey-weighted estimate is 0.851 (SE 0.129), with an approximate 95% confidence interval of 0.60–1.10. These estimates are consistent with proportional scaling, but the intervals also leave room for a modest negative relationship between firm size and sales per worker.
 
 ## Interpretation
 
-The data do not support the claim that larger firms are more productive. They also do not show a clear large-firm disadvantage:
+The results do not provide evidence that larger firms are more productive. The size-dummy and elasticity specifications give somewhat different descriptions of the size relationship:
 
 - In the raw data, large firms appear about 55% less productive, but this is mostly a data-quality artifact.
 - After cleaning, the large-firm gap is smaller (about 30-37% at the median and in OLS) and only moderately significant.
-- The elasticity of sales with respect to employment is close to 1 and not statistically different from it.
+- The elasticity estimates are close to 1 and not statistically different from it, but their confidence intervals do not rule out a modest negative relationship.
 
 These are associations in observational, cross-sectional data and do not show that growing a firm changes its productivity.
 
@@ -120,4 +120,4 @@ Bigger-Firms-Better-Productivity/
 
 ## Key Takeaway
 
-The raw data appear to show that large firms are much less productive, but that result is largely driven by inconsistent sales reports. Once firms with contradictory sales and labor-cost figures are removed, sales scale roughly one-for-one with employment. Larger firms are not more productive than smaller ones in this sample, and any disadvantage is modest and imprecisely estimated.
+The raw data appear to show that large firms are much less productive, but that result is largely driven by inconsistent sales reports. Once firms with contradictory sales and labor-cost figures are removed, the estimated sales-employment elasticity is close to 1. This is consistent with proportional scaling, but the confidence interval does not rule out a modest negative relationship between firm size and sales per worker. The size-dummy specification separately estimates a sizable negative gap for large firms, so the two specifications should be reported rather than collapsed into a single conclusion.
