@@ -35,7 +35,7 @@ Many sales values are implausible relative to firm size:
 - Some large firms report sales far too low for their headcount (for example, 479 employees and 28.8 million UZS in sales).
 - Large firms are heavily over-represented in the bottom 5% of productivity: 14.0% of large firms fall there, versus 2.4% of small and 3.2% of medium firms.
 
-For these firms, reported labor costs are normal (median about 18 million UZS per employee, the same as other firms), so the inconsistency lies in the sales figure. To identify these cases without relying only on the productivity outcome, the main cleaning rule flags firms when:
+For the suspicious large firms with very low reported sales, reported labor costs are normal (median about 18 million UZS per employee, the same as other firms), which is consistent with the sales figure being the source of the inconsistency. This does not establish that explanation for every flagged observation. The notebook therefore audits the 20 highest-sales-per-employee observations separately, reporting employment, sales, labor cost, labor-cost share, size category, and cleaning status. To identify the consistency cases without relying only on the productivity outcome, the main cleaning rule flags firms when:
 
 - labor cost exceeds sales (120 firms), or
 - labor cost is below 0.1% of sales (15 firms).
