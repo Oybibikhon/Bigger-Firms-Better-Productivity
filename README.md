@@ -35,10 +35,12 @@ Many sales values are implausible relative to firm size:
 - Some large firms report sales far too low for their headcount (for example, 479 employees and 28.8 million UZS in sales).
 - Large firms are heavily over-represented in the bottom 5% of productivity: 14.0% of large firms fall there, versus 2.4% of small and 3.2% of medium firms.
 
-For these firms, reported labor costs are normal (median about 18 million UZS per employee, the same as other firms), so the inconsistency lies in the sales figure. To identify these cases without selecting on the outcome, firms are flagged when:
+For these firms, reported labor costs are normal (median about 18 million UZS per employee, the same as other firms), so the inconsistency lies in the sales figure. To identify these cases without relying only on the productivity outcome, the main cleaning rule flags firms when:
 
 - labor cost exceeds sales (120 firms), or
 - labor cost is below 0.1% of sales (15 firms).
+
+These thresholds are judgment calls rather than uniquely determined cutoffs. The analysis therefore includes a sensitivity check that varies the upper threshold to 50% and 200% of sales and the lower threshold to 0.05% and 0.2% of sales, re-estimating both the size-dummy and elasticity specifications under each rule.
 
 In total 135 firms are flagged, about 13-16% of each size group. Firms with missing labor cost cannot be tested and remain in the sample. The flagging rule cannot tell whether sales or labor cost is the wrong number, so the whole firm is dropped.
 
@@ -94,7 +96,7 @@ These are associations in observational, cross-sectional data and do not show th
 - Cross-sectional data; results are associations, not causal effects.
 - Productivity is sales per employee, not value added. It depends on input intensity, so it is not directly comparable across sectors (sector fixed effects only partly address this).
 - Employment counts may be measured with error, which biases the sales-per-employee comparison against larger firms. The elasticity specification reduces this problem but does not remove it; the true elasticity may be somewhat higher than 0.90.
-- The consistency rule for removing firms depends on its thresholds and on the labor-cost variable being reliable. It is not fully independent of the outcome, since labor cost above sales implies low measured productivity.
+- The consistency rule for removing firms depends on its thresholds and on the labor-cost variable being reliable. It is not fully independent of the outcome, since labor cost above sales implies low measured productivity. Alternative thresholds are therefore reported as a robustness check rather than treating the main cutoffs as uniquely correct.
 - About 13-16% of each size group is dropped in the cleaned sample, so the conclusions apply to firms with internally consistent reports.
 - Small subgroups (foreign-owned firms: 47; exporters: 98) limit what the control variables can show.
 
