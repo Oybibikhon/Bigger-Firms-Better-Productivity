@@ -72,7 +72,7 @@ Two main specifications are reported:
    - Main explanatory variable: log permanent employment
    - An elasticity of 1 means sales scale proportionally with employment, so sales per worker is constant with employment.
 
-The notebook also reports robustness checks using winsorization, trimming, median regression, survey weights, alternative consistency thresholds, and an audit of extreme sales-per-employee observations.
+The notebook also reports robustness checks using winsorization, trimming, median regression, alternative labor-share thresholds, a log-scale labor-share diagnostic, a missing-labor-cost robustness check, survey weights, and an audit of extreme sales-per-employee observations.
 
 Standard errors are heteroskedasticity-robust (HC1). Survey-weighted regressions use `wmedian` as a robustness check; they are not full survey-design estimates accounting for every aspect of the survey design.
 
@@ -120,7 +120,8 @@ The results should therefore be presented as **associations**, not causal effect
 - Sales per employee is not value added and can reflect differences in input intensity.
 - Employment may be measured with error.
 - The labor-cost consistency rule depends on its chosen thresholds and on the reliability of reported labor costs.
-- About 13–16% of firms in each size group are dropped by the main consistency screen.
+- The main consistency screen removes a non-trivial share of observations, and its upper threshold is deliberately tested for sensitivity.
+- Firms with missing labor-cost data cannot be verified by this screen; the notebook therefore reports a robustness check that excludes observations with missing `n2a`.
 - The cleaned results therefore describe firms whose reported sales and labor costs pass the consistency screen.
 - Small subgroups, including foreign-owned firms (47) and exporters (98), limit what can be learned from those controls.
 
@@ -148,6 +149,6 @@ Bigger-Firms-Better-Productivity/
 
 ## Key Takeaway
 
-The raw data show a large negative large-vs-small productivity gap, but the estimate is sensitive to extreme observations. After the labor-cost consistency screen, the large-firm size coefficient remains negative, while the sales-employment elasticity is close to 1 and statistically indistinguishable from 1.
+The raw data show a large negative large-vs-small productivity gap, but the estimate is sensitive to extreme observations and data-quality screens. After the main labor-cost consistency screen, the large-firm size coefficient remains negative, although substantially smaller than in the raw data. The sales-employment elasticity is below 1 point-estimate-wise, but its confidence interval includes 1; this does not establish that the elasticity equals 1.
 
 The two specifications should therefore be reported together rather than reduced to a single conclusion. The remaining question is **what mechanisms explain productivity differences across firms of different sizes?**
