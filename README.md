@@ -2,9 +2,9 @@
 
 ## Overview
 
-This project examines the relationship between firm size and labor productivity among firms in Uzbekistan, using the 2024 World Bank Enterprise Survey (WBES).
+This project examines the relationship between firm size and labor productivity among firms in Uzbekistan using the **2024 World Bank Enterprise Survey (WBES)**.
 
-The initial regressions suggested that large firms have much lower measured sales per worker than small firms. The estimate is sensitive to how extreme observations are handled. Some suspicious observations have sales figures that are inconsistent with reported labor costs, but the cleaning rule can itself remove low-productivity observations, so the raw gap should not be attributed entirely to data quality.
+The raw data show a large negative difference in sales per worker between large and small firms. That relationship is sensitive to extreme observations and to how potentially inconsistent sales and labor-cost reports are handled. The project therefore compares several specifications and data-quality checks.
 
 ## Research Question
 
@@ -12,115 +12,142 @@ The initial regressions suggested that large firms have much lower measured sale
 
 ## Data
 
-Firm-level data from the **World Bank Enterprise Survey for Uzbekistan (2024)**: 1,008 firms, 340 variables. The raw data file is not included in this repository (see *Reproducing the analysis*).
+The analysis uses the **2024 World Bank Enterprise Survey for Uzbekistan**:
 
-Key variables:
-
-- Annual sales (`d2`) and number of permanent employees (`l1`)
-- Labor costs (`n2a`), used to cross-check the sales figures
-- Firm age (survey year minus year of establishment, `b5`)
-- Foreign ownership (`b2b`) and exporter status (`d3b` + `d3c`)
+- 1,008 firms
+- 340 variables
+- Annual sales (`d2`)
+- Permanent employees (`l1`)
+- Labor costs (`n2a`)
+- Firm age (`b5`)
+- Foreign ownership (`b2b`)
+- Exporter status (`d3b` + `d3c`)
 - Sector and region strata
-- Survey weights (`wmedian`; `wstrict` and `wweak` give similar results). The regressions define firm size from reported permanent employees; the survey's separate `a6a` size variable is checked against these categories rather than assumed to be identical.
+- Survey weights (`wmedian`)
 
-Productivity is measured as annual sales per employee (in logs). This is a revenue-based measure, not value added.
+The raw WBES data are not included in this repository.
 
-Firm size categories: Small (1-19 employees), Medium (20-99), Large (100+). The 9 firms with fewer than 5 employees are included in Small.
+### Firm size
 
-## Data quality problem
+Firm size is defined from reported permanent employees:
 
-Many sales values are implausible relative to firm size:
+- **Small:** 1–19 employees
+- **Medium:** 20–99 employees
+- **Large:** 100+ employees
 
-- Some small firms report sales equivalent to billions of dollars (for example, 12 employees and 2.5e14 UZS in sales).
-- Some large firms report sales far too low for their headcount (for example, 479 employees and 28.8 million UZS in sales).
-- Large firms are heavily over-represented in the bottom 5% of productivity: 14.0% of large firms fall there, versus 2.4% of small and 3.2% of medium firms.
+Firms with fewer than 5 employees are included in Small. The employee-based categories are also cross-checked against the survey's separate `a6a` size variable.
 
-For the suspicious large firms with very low reported sales, reported labor costs are normal (median about 18 million UZS per employee, the same as other firms), which is consistent with the sales figure being the source of the inconsistency. This does not establish that explanation for every flagged observation. The notebook therefore audits the 20 highest-sales-per-employee observations separately, reporting employment, sales, labor cost, labor-cost share, size category, and cleaning status. To identify the consistency cases without relying only on the productivity outcome, the main cleaning rule flags firms when:
+### Productivity
 
-- labor cost exceeds sales (120 firms), or
-- labor cost is below 0.1% of sales (15 firms).
+Labor productivity is measured as **annual sales per employee**, in logs. This is a revenue-based measure rather than value added.
 
-These thresholds are judgment calls rather than uniquely determined cutoffs. The analysis therefore includes a sensitivity check that varies the upper threshold to 50% and 200% of sales and the lower threshold to 0.05% and 0.2% of sales, re-estimating both the size-dummy and elasticity specifications under each rule.
+## Data Quality
 
-In total 135 firms are flagged, about 13-16% of each size group. Firms with missing labor cost cannot be tested and remain in the sample. The flagging rule cannot tell whether sales or labor cost is the wrong number, so the whole firm is dropped.
+Several observations have sales figures that are difficult to reconcile with firm size and reported labor costs. For example:
+
+- A small firm reports 12 employees and approximately 2.5 × 10^14 UZS in sales.
+- A large firm reports 479 employees and only 28.8 million UZS in sales.
+- Large firms are over-represented in the bottom 5% of measured productivity: 14.0% of large firms versus 2.4% of small and 3.2% of medium firms.
+
+The main consistency screen flags firms when:
+
+- labor cost exceeds sales, **or**
+- labor cost is below 0.1% of sales.
+
+This flags **135 firms**. The rule is a consistency check, not proof that either sales or labor costs are incorrect. Because the thresholds are judgment calls, the notebook also tests alternative thresholds.
 
 ## Methodology
 
-- Python (pandas, NumPy, statsmodels).
-- OLS with heteroskedasticity-robust (HC1) standard errors; weighted least squares with survey weights as a robustness check.
-- Controls: firm age, foreign ownership, exporter status, sector, region.
-- Small firms are the reference category.
-- Two outcome specifications:
-  1. Log sales per employee, on firm-size categories.
-  2. Log sales on log employment (elasticity). This avoids placing employment in the denominator of the outcome, where measurement error in employment would bias the size coefficient downward. An elasticity of 1 means sales scale proportionally with employment, so sales per worker is constant with employment.
+The analysis uses **Python** with pandas, NumPy, and statsmodels.
+
+Two main specifications are reported:
+
+1. **Size-dummy specification**
+   - Outcome: log sales per employee
+   - Small firms are the reference group
+   - Controls: firm age, foreign ownership, exporter status, sector, and region
+
+2. **Employment elasticity specification**
+   - Outcome: log sales
+   - Main explanatory variable: log permanent employment
+   - An elasticity of 1 means sales scale proportionally with employment, so sales per worker is constant with employment.
+
+The notebook also reports robustness checks using winsorization, trimming, median regression, survey weights, alternative consistency thresholds, and an audit of extreme sales-per-employee observations.
+
+Standard errors are heteroskedasticity-robust (HC1). Survey-weighted regressions use `wmedian` as a robustness check; they are not full survey-design estimates accounting for every aspect of the survey design.
 
 ## Results
 
-### Large vs. small firms (log sales per employee)
+### Large vs. small firms
 
-| Specification | n | Large vs. small | p-value |
-|---|---|---|---|
-| OLS, raw outcome | 887 | -0.88 | 0.001 |
-| OLS, winsorized at 1%/99% | 887 | -0.81 | 0.001 |
-| OLS, trimmed at 1%/99% | 870 | -0.63 | 0.006 |
-| OLS, trimmed at 5%/95% | 798 | +0.01 | 0.96 |
+| Specification | N | Large vs. Small | p-value |
+|---|---:|---:|---:|
+| Raw OLS | 887 | -0.88 | 0.001 |
+| Winsorized 1%/99% | 887 | -0.81 | 0.001 |
+| Trimmed 1%/99% | 870 | -0.63 | 0.006 |
+| Trimmed 5%/95% | 798 | +0.01 | 0.963 |
 | Median regression | 887 | -0.34 | 0.086 |
-| **OLS, inconsistent firms removed** | 752 | **-0.46** | **0.033** |
+| **Inconsistent firms removed** | **752** | **-0.46** | **0.033** |
 
-Medium firms are not statistically different from small firms in any specification.
+The cleaned large-firm coefficient of -0.46 corresponds to approximately **37% lower sales per worker** than the Small reference group. This is a discrete comparison between broad employee-count categories, not a continuous slope.
 
-The large-firm coefficient changes substantially across treatments of extreme observations. Trimming the tails of the outcome variable also removes observations based on the outcome itself, whereas the labor-cost consistency rule uses an external consistency check. On that sample, the large-firm coefficient is -0.46, corresponding to about 37% lower sales per worker than the Small reference group (exp(-0.46) - 1). This is a discrete comparison between broad employee-count categories, not an estimate of the slope of productivity over the full employment distribution.
+### Sales-employment elasticity
 
-### Elasticity of sales with respect to employment
-
-| Sample | n | Elasticity | Std. error | p-value (vs. 1) |
-|---|---|---|---|---|
+| Sample | N | Elasticity | SE | p-value vs. 1 |
+|---|---:|---:|---:|---:|
 | All firms with valid sales | 887 | 0.748 | 0.074 | 0.0006 |
 | Inconsistent firms removed | 752 | 0.896 | 0.068 | 0.128 |
-| Inconsistent firms removed, survey-weighted | 752 | 0.851 | 0.129 | 0.250 |
+| Cleaned, survey-weighted | 752 | 0.851 | 0.129 | 0.250 |
 
-In the cleaned sample the elasticity is not statistically distinguishable from 1. The point estimate is 0.896 (SE 0.068), with an approximate 95% confidence interval of 0.76–1.03. The survey-weighted estimate is 0.851 (SE 0.129), with an approximate 95% confidence interval of 0.60–1.10. These estimates are consistent with proportional scaling, but the intervals also leave room for a modest negative relationship between firm size and sales per worker.
+In the cleaned sample, the elasticity estimate is **0.896 (SE 0.068)** and is not statistically distinguishable from 1. Its approximate 95% confidence interval is **0.76–1.03**. The survey-weighted estimate is **0.851 (SE 0.129)**, with an approximate 95% confidence interval of **0.60–1.10**.
+
+These estimates are consistent with proportional scaling, while the confidence intervals also leave room for a modest negative relationship between firm size and sales per worker.
 
 ## Interpretation
 
-The two main specifications describe the size relationship in different ways:
+The specifications capture different aspects of the size-productivity relationship:
 
-- The raw data show a large negative large-vs-small coefficient, but this estimate is sensitive to extreme observations.
-- After the labor-cost consistency screen, the large-firm coefficient is -0.46 in the OLS specification, corresponding to about 37% lower sales per worker than the Small reference group.
-- The elasticity estimates are close to 1 and not statistically different from 1 in the cleaned sample, but their confidence intervals do not rule out a modest negative relationship.
+- The raw size-dummy result shows a large negative large-vs-small difference.
+- That estimate changes substantially when extreme observations are treated differently.
+- After the labor-cost consistency screen, the large-firm coefficient remains negative at -0.46.
+- The cleaned sales-employment elasticity is close to 1 and is not statistically different from 1.
 
-These are associations in observational, cross-sectional data and do not establish that changes in firm size cause changes in productivity.
+The results should therefore be presented as **associations**, not causal effects.
 
 ## Limitations
 
-- Cross-sectional data; results are associations, not causal effects.
-- Productivity is sales per employee, not value added. It depends on input intensity, so it is not directly comparable across sectors (sector controls partly account for cross-sector differences).
-- Employment counts may be measured with error, which can affect the sales-per-employee comparison. The elasticity specification avoids putting employment in the denominator of the dependent variable, but it does not eliminate measurement-error concerns.
-- The employee-based size categories are a substantive definition used for the analysis, while `wmedian` is the survey weight. The notebook cross-tabulates these categories against the survey's `a6a` size variable to document any mismatch rather than treating the two definitions as interchangeable.
-- The consistency rule for removing firms depends on its thresholds and on the labor-cost variable being reliable. It is not fully independent of the outcome, since labor cost above sales implies low measured productivity. Alternative thresholds are therefore reported as a robustness check rather than treating the main cutoffs as uniquely correct.
-- About 13-16% of each size group is dropped in the cleaned sample, so the conclusions apply to firms with internally consistent reports.
-- Small subgroups (foreign-owned firms: 47; exporters: 98) limit what the control variables can show.
+- The data are cross-sectional, so the analysis does not identify causal effects.
+- Sales per employee is not value added and can reflect differences in input intensity.
+- Employment may be measured with error.
+- The labor-cost consistency rule depends on its chosen thresholds and on the reliability of reported labor costs.
+- About 13–16% of firms in each size group are dropped by the main consistency screen.
+- The cleaned results therefore describe firms whose reported sales and labor costs pass the consistency screen.
+- Small subgroups, including foreign-owned firms (47) and exporters (98), limit what can be learned from those controls.
 
-## Reproducing the analysis
+## Reproducing the Analysis
 
-1. Obtain the WBES Uzbekistan 2024 data from the World Bank Enterprise Surveys website (subject to their terms of use) and save it as `data/raw/Uzbekistan-2024-full-data.dta`. The `.dta` file is excluded from this repository via `.gitignore`.
-2. Install the requirements: Python, pandas, NumPy, statsmodels, Jupyter.
-3. Open `notebooks/02_analysis.ipynb` and run all cells from top to bottom.
+1. Obtain the **2024 Uzbekistan WBES** data from the World Bank Enterprise Surveys and save the file as:
+   `data/raw/Uzbekistan-2024-full-data.dta`
+2. Install Python, pandas, NumPy, statsmodels, and Jupyter.
+3. Open `notebooks/02_analysis.ipynb`.
+4. Run the notebook from top to bottom.
+
+The raw `.dta` file is excluded from GitHub through `.gitignore`.
 
 ## Repository Structure
 
 ```
 Bigger-Firms-Better-Productivity/
-│
 ├── notebooks/
-│   ├── 01_data_exploration.ipynb   # original exploratory notebook
-│   └── 02_analysis.ipynb           # clean analysis with data-quality checks
-│
-├── data/raw/                       # raw survey data (not tracked)
+│   ├── 01_data_exploration.ipynb
+│   └── 02_analysis.ipynb
+├── data/raw/                  # raw survey data; not tracked
 ├── .gitignore
 └── README.md
 ```
 
 ## Key Takeaway
 
-The raw data show a large negative size coefficient, but that estimate is sensitive to extreme observations. Some observations have sales figures that are inconsistent with reported labor costs, while the consistency screen itself can remove low-productivity observations. Once the screen is applied, the estimated sales-employment elasticity is close to 1. This is consistent with proportional scaling, but the confidence interval does not rule out a modest negative relationship between firm size and sales per worker. The size-dummy specification separately estimates a sizable negative gap for large firms, so the two specifications should be reported rather than collapsed into a single conclusion.
+The raw data show a large negative large-vs-small productivity gap, but the estimate is sensitive to extreme observations. After the labor-cost consistency screen, the large-firm size coefficient remains negative, while the sales-employment elasticity is close to 1 and statistically indistinguishable from 1.
+
+The two specifications should therefore be reported together rather than reduced to a single conclusion. The remaining question is **what mechanisms explain productivity differences across firms of different sizes?**
