@@ -3,6 +3,5 @@ __pycache__/
 .ipynb_checkpoints/
 *.pyc
 
+# Raw World Bank Enterprise Survey data
 data/raw/*.dta
-data/raw/*.dta
-.venv/
