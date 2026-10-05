@@ -8,7 +8,7 @@ The raw data show a large negative difference in sales per worker between large 
 
 ### Bottom line
 
-The data do **not** show that larger firms have higher sales per worker. In the main cleaned size-dummy specification, Large firms have significantly lower sales per worker than Small firms, while Medium firms are not statistically different from Small firms. The sales-employment elasticity is below 1 point-estimate-wise and is sensitive to the consistency thresholds. Taken together, the results do not support the claim that bigger firms are more productive in terms of sales per employee.
+The data do **not** show that larger firms have higher sales per worker. In the main cleaned size-dummy specification, Large firms have significantly lower sales per worker than Small firms, while Medium firms are not statistically different from Small firms. The sales-employment elasticity is below 1 point-estimate-wise and is sensitive to the consistency thresholds. The negative size gap is smaller or becomes statistically insignificant in some robustness checks, so its strength depends on specification. Taken together, the results do not support the claim that bigger firms are more productive in terms of sales per employee.
 
 ## Research Question
 
