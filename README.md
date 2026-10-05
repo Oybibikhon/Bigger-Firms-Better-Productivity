@@ -122,7 +122,7 @@ The main consistency rule flags labor cost above 100% of sales or below 0.1% of 
 | Lower 0.0005 | 1.0 | 0.0005 | 753 | -0.454 | 0.033 | 0.898 | 0.133 |
 | Lower 0.002 | 1.0 | 0.002 | 747 | -0.518 | 0.014 | 0.881 | 0.079 |
 
-Five of the seven alternative threshold rules reject an elasticity of 1 at the 5% level, while the main rule does not. In contrast, the Large size coefficient remains negative and statistically significant at the 5% level under every threshold rule shown. Thus, the threshold analysis does not show that the size-dummy result loses significance; it shows that inference about proportional scaling is more sensitive to the consistency cutoff.
+Four of the seven alternative threshold rules reject an elasticity of 1 at the 5% level: Upper 0.5, Upper 5, Upper 10, and Upper 100. The other three do not: Upper 2 (p = 0.066), Lower 0.0005 (p = 0.133), and Lower 0.002 (p = 0.079). Upper 2 and Lower 0.002 are relatively close to the 5% cutoff. In contrast, the Large size coefficient remains negative and statistically significant at the 5% level under every threshold rule shown. Thus, the threshold analysis does not show that the size-dummy result loses significance; it shows that inference about proportional scaling is more sensitive to the consistency cutoff.
 
 ### Weighted size-dummy specification
 
@@ -160,7 +160,7 @@ The results should therefore be presented as **associations**, not causal effect
 
 1. Obtain the **2024 Uzbekistan WBES** data from the World Bank Enterprise Surveys and save the file as:
    `data/raw/Uzbekistan-2024-full-data.dta`
-2. Install Python, pandas, NumPy, statsmodels, and Jupyter.
+2. Install Python, pandas, NumPy, statsmodels, matplotlib, and Jupyter.
 3. Open `notebooks/02_analysis.ipynb`.
 4. Run the notebook from top to bottom.
 
