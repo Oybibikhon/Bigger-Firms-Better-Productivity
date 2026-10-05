@@ -88,20 +88,47 @@ Standard errors are heteroskedasticity-robust (HC1). Survey-weighted regressions
 | Trimmed 5%/95% | 798 | +0.01 | 0.963 |
 | Median regression | 887 | -0.34 | 0.086 |
 | **Inconsistent firms removed** | **752** | **-0.46** | **0.033** |
+| Labor costs observed only | 663 | -0.31 | 0.139 |
+| ×1,000 sales rescaling sensitivity | 887 | +0.15 | 0.464 |
 
 The cleaned large-firm coefficient of -0.46 corresponds to approximately **37% lower sales per worker** than the Small reference group. This is a discrete comparison between broad employee-count categories, not a continuous slope.
 
 ### Sales-employment elasticity
 
-| Sample | N | Elasticity | SE | p-value vs. 1 |
+| Sample/specification | N | Elasticity | SE | p-value vs. 1 |
 |---|---:|---:|---:|---:|
 | All firms with valid sales | 887 | 0.748 | 0.074 | 0.0006 |
 | Inconsistent firms removed | 752 | 0.896 | 0.068 | 0.128 |
 | Cleaned, survey-weighted | 752 | 0.851 | 0.129 | 0.250 |
+| Labor costs observed only | 663 | 0.939 | 0.065 | 0.346 |
+| ×1,000 sales rescaling sensitivity | 887 | 1.041 | 0.059 | 0.489 |
 
-In the cleaned sample, the elasticity estimate is **0.896 (SE 0.068)** and is not statistically distinguishable from 1. Its approximate 95% confidence interval is **0.76–1.03**. The survey-weighted estimate is **0.851 (SE 0.129)**, with an approximate 95% confidence interval of **0.60–1.10**.
+The main cleaned estimate is **0.896 (SE 0.068)** and is not statistically distinguishable from 1 at conventional levels. Its approximate 95% confidence interval is **0.76–1.03**. The survey-weighted estimate is **0.851 (SE 0.129)**, with an approximate 95% confidence interval of **0.60–1.10**.
 
-These estimates are consistent with proportional scaling, while the confidence intervals also leave room for a modest negative relationship between firm size and sales per worker.
+These estimates do not establish that the elasticity equals 1. The point estimate is below 1, and alternative consistency thresholds can produce statistically significant estimates below 1.
+
+### Threshold sensitivity
+
+The main consistency rule flags labor cost above 100% of sales or below 0.1% of sales. The threshold table below varies one cutoff at a time. The upper-threshold labels refer to ratios of labor cost to sales: for example, upper 0.5 means 50% of sales, while upper 100 means 10,000% of sales.
+
+| Rule | Upper | Lower | N | Large coef. | Large p | Elasticity | Elasticity p vs. 1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Main | 1.0 | 0.001 | 752 | -0.456 | 0.033 | 0.896 | 0.128 |
+| Upper 0.5 | 0.5 | 0.001 | 653 | -0.595 | 0.008 | 0.848 | 0.034 |
+| Upper 2 | 2.0 | 0.001 | 780 | -0.520 | 0.028 | 0.864 | 0.066 |
+| Upper 5 | 5.0 | 0.001 | 794 | -0.560 | 0.019 | 0.838 | 0.030 |
+| Upper 10 | 10.0 | 0.001 | 800 | -0.531 | 0.026 | 0.850 | 0.044 |
+| Upper 100 | 100.0 | 0.001 | 821 | -0.857 | 0.001 | 0.760 | 0.001 |
+| Lower 0.0005 | 1.0 | 0.0005 | 753 | -0.454 | 0.033 | 0.898 | 0.133 |
+| Lower 0.002 | 1.0 | 0.002 | 747 | -0.518 | 0.014 | 0.881 | 0.079 |
+
+Five of the seven alternative threshold rules reject an elasticity of 1 at the 5% level, while the main rule does not. In contrast, the Large size coefficient remains negative and statistically significant at the 5% level under every threshold rule shown. Thus, the threshold analysis does not show that the size-dummy result loses significance; it shows that inference about proportional scaling is more sensitive to the consistency cutoff.
+
+### Weighted size-dummy specification
+
+Using the survey weight wmedian changes the size-dummy estimates. In the cleaned weighted regression, the Medium coefficient is -0.042 (p = 0.852) and the Large coefficient is **-1.036 (p = 0.004)**, compared with -0.456 (p = 0.033) in the unweighted cleaned specification.
+
+These weighted regressions use wmedian with HC1 standard errors as a robustness check. They are **not full survey-design estimates** that account for every aspect of the survey design.
 
 ## Interpretation
 
@@ -109,10 +136,12 @@ The specifications capture different aspects of the size-productivity relationsh
 
 - The raw size-dummy result shows a large negative large-vs-small difference.
 - That estimate changes substantially when extreme observations are treated differently.
-- After the labor-cost consistency screen, the large-firm coefficient remains negative at -0.46.
-- The cleaned sales-employment elasticity is close to 1 and is not statistically different from 1.
+- After the main labor-cost consistency screen, the Large coefficient remains negative at -0.46.
+- Restricting the analysis to firms with observed labor costs reduces the Large coefficient to -0.31 and makes it statistically insignificant.
+- The main cleaned elasticity is 0.896 and is not statistically different from 1, but threshold sensitivity shows that this conclusion is not robust to all consistency cutoffs.
+- A separate ×1,000 sales-rescaling exercise produces a positive Large coefficient and an elasticity above 1, but this is an ad-hoc sensitivity assumption and should not be treated as a verified correction.
 
-The results should therefore be presented as **associations**, not causal effects.
+The results should therefore be presented as **associations**, not causal effects, and the two main specifications should be interpreted alongside the data-quality and sensitivity checks rather than reduced to a single estimate.
 
 ## Limitations
 
@@ -120,9 +149,11 @@ The results should therefore be presented as **associations**, not causal effect
 - Sales per employee is not value added and can reflect differences in input intensity.
 - Employment may be measured with error.
 - The labor-cost consistency rule depends on its chosen thresholds and on the reliability of reported labor costs.
-- The main consistency screen removes a non-trivial share of observations, and its upper threshold is deliberately tested for sensitivity.
-- Firms with missing labor-cost data cannot be verified by this screen; the notebook therefore reports a robustness check that excludes observations with missing `n2a`.
-- The cleaned results therefore describe firms whose reported sales and labor costs pass the consistency screen.
+- The consistency screen is based on labor cost relative to sales, so it uses an outcome-related variable in the data-quality check. It can identify some implausible combinations, but it cannot by itself prove which reported variable is wrong.
+- The screen can also miss joint unit errors if both sales and labor costs are mis-scaled in a way that leaves their ratio looking plausible.
+- Firms with missing labor-cost data cannot be verified by this screen; the main consistency-cleaned sample therefore includes some observations that were not checked. The notebook reports a separate robustness check excluding observations with missing n2a.
+- The ×1,000 rescaling exercise is outcome-selected because the suspicious Large firms were identified using very low measured productivity. It is therefore treated as an appendix-style sensitivity check rather than as a preferred correction.
+- Survey-weighted regressions use wmedian with HC1 standard errors as a robustness check rather than a full survey-design estimator accounting for strata and clustering.
 - Small subgroups, including foreign-owned firms (47) and exporters (98), limit what can be learned from those controls.
 
 ## Reproducing the Analysis
